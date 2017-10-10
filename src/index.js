@@ -27,7 +27,7 @@ export default class MirrorLight extends React.Component {
       elements.push(<span className={style ? prefix + style : ''} key={++index}>{token}</span>)
     }
     const mode = codeMirror.findModeByName(language)
-    codeMirror.runMode(value, mode ? mode.mode : language, (token, style) => {
+    codeMirror.runMode(value, mode ? mode.mime : language, (token, style) => {
       if (lastStyle === style) {
         tokenBuf += token
         lastStyle = style
