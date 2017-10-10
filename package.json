@@ -7,7 +7,8 @@
     "build": "babel src -d lib",
     "watch": "babel src --watch -d lib",
     "watch:demo": "webpack --progress --watch --config webpack.config.demo.babel.js",
-    "test": "eslint src --ext .js --ext .jsx"
+    "lint": "eslint src --ext .js --ext .jsx",
+    "test": "npm run lint && mocha --require test/setup.js --compilers js:babel-register"
   },
   "keywords": [
     "remark",
@@ -28,7 +29,10 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-0-without-async": "^1.0.0",
+    "babel-register": "^6.26.0",
     "codemirror": "^5.30.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.8.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-react": "^5.0.0",
@@ -37,9 +41,12 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.4.0",
     "eslint-plugin-standard": "^3.0.1",
+    "jsdom": "^11.3.0",
+    "mocha": "^4.0.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0",
     "remark": "^8.0.0",
     "remark-react": "^4.0.1",
     "webpack": "^3.6.0"

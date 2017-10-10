@@ -45,7 +45,7 @@ ReactDOM.render(
     codeMirror={CodeMirror}
     theme='solarized'
     value={exampleCode}
-    language='gfm'
+    language='gaehoi'
   />,
   document.getElementById('root')
 )

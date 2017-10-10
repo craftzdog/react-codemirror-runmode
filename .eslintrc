@@ -6,6 +6,8 @@
   ],
   "parser": "babel-eslint",
   "globals": {
-    "CodeMirror": true
+    "CodeMirror": true,
+    "describe": true,
+    "it": true
   }
 }

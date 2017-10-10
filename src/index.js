@@ -24,7 +24,7 @@ export default class MirrorLight extends React.Component {
     let lastStyle = null
     let tokenBuf = ''
     const pushElement = (token, style) => {
-      elements.push(<span className={prefix + (style || 'space')} key={++index}>{token}</span>)
+      elements.push(<span className={style ? prefix + style : ''} key={++index}>{token}</span>)
     }
     codeMirror.runMode(value, language, (token, style) => {
       if (lastStyle === style) {
