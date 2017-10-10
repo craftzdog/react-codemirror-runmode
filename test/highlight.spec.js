@@ -4,6 +4,7 @@ import assert from 'assert'
 
 import CodeMirror from 'codemirror'
 import 'codemirror/addon/runmode/runmode'
+import 'codemirror/mode/meta'
 import 'codemirror/mode/javascript/javascript'
 import Highlighter from '../lib/'
 
