@@ -1,6 +1,8 @@
 react-codemirror-runmode
 ========================
 
+[![build status](https://secure.travis-ci.org/craftzdog/react-codemirror-runmode.svg)](http://travis-ci.org/craftzdog/react-codemirror-runmode)
+
 Syntax highlighter for React, utilizing CodeMirror's parser
 
 ## Installation
