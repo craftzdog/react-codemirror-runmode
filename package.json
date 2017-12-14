@@ -9,7 +9,7 @@
     "watch:demo": "webpack --progress --watch --config webpack.config.demo.babel.js",
     "lint": "eslint src --ext .js --ext .jsx",
     "test": "npm run lint && mocha --require babel-register --require test/setup.js",
-    "prepublish": "npm test; npm run build"
+    "prepublish": "npm run build && npm test"
   },
   "keywords": [
     "remark",
