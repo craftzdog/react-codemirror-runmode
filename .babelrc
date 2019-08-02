@@ -1,20 +1,16 @@
 {
   "presets": [
-    ["env", {
-      "targets": {
-        "uglify": true
-      }
+    ["@babel/preset-env", {
+      "targets": { "electron": "3.0.14" },
+      "useBuiltIns": "usage",
+      "debug": false,
+      "corejs": 3
     }],
-    "stage-0-without-async",
-    "react"
+    "@babel/preset-react"
   ],
   "plugins": [
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties",
     "add-module-exports"
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-      ]
-    }
-  }
+  ]
 }

@@ -4,10 +4,12 @@ import Adapter from 'enzyme-adapter-react-16'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-const { window } = new JSDOM('')
+const { window } = new JSDOM('', {
+  url: 'http://localhost/'
+})
 global.window = window
 global.document = window.document
-Object.keys(global.window).forEach((property) => {
+Object.keys(global.window).forEach(property => {
   if (typeof global[property] === 'undefined') {
     global[property] = document.defaultView[property]
   }

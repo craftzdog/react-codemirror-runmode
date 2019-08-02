@@ -15,13 +15,18 @@ describe('highlight', () => {
       <Highlighter
         codeMirror={CodeMirror}
         value={code}
-        theme='solarized'
-        language='javascript'
+        theme="solarized"
+        language="javascript"
       />
     )
     const wrapper = mount(actual)
     assert.ok(wrapper.find('pre').hasClass('cm-s-solarized'))
     assert.equal(wrapper.find('pre > code > span').length, 8)
-    assert.ok(wrapper.find('pre > code > span').first().hasClass('cm-keyword'))
+    assert.ok(
+      wrapper
+        .find('pre > code > span')
+        .first()
+        .hasClass('cm-keyword')
+    )
   })
 })

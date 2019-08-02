@@ -17,14 +17,26 @@ export default class MirrorLight extends React.Component {
     prefix: 'cm-'
   }
 
-  render () {
-    const { inline, codeMirror, value, language, className, prefix, theme } = this.props
+  render() {
+    const {
+      inline,
+      codeMirror,
+      value,
+      language,
+      className,
+      prefix,
+      theme
+    } = this.props
     const elements = []
     let index = 0
     let lastStyle = null
     let tokenBuf = ''
     const pushElement = (token, style) => {
-      elements.push(<span className={style ? prefix + style : ''} key={++index}>{token}</span>)
+      elements.push(
+        <span className={style ? prefix + style : ''} key={++index}>
+          {token}
+        </span>
+      )
     }
     const mode = codeMirror.findModeByName(language)
     codeMirror.runMode(value, mode ? mode.mime : language, (token, style) => {
@@ -47,6 +59,10 @@ export default class MirrorLight extends React.Component {
       </code>
     )
 
-    return inline ? code : <pre className={`${className} ${prefix}s-${theme}`}>{code}</pre>
+    return inline ? (
+      code
+    ) : (
+      <pre className={`${className} ${prefix}s-${theme}`}>{code}</pre>
+    )
   }
 }

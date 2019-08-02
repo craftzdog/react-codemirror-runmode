@@ -43,9 +43,9 @@ export default class MirrorLight extends React.Component {
 ReactDOM.render(
   <MirrorLight
     codeMirror={CodeMirror}
-    theme='solarized'
+    theme="solarized"
     value={exampleCode}
-    language='gfm'
+    language="gfm"
   />,
   document.getElementById('root')
 )
