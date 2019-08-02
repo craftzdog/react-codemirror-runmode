@@ -1,3 +1,4 @@
+import 'core-js/stable'
 import MirrorLight from '../../src/index'
 import React from 'react'
 import ReactDOM from 'react-dom'

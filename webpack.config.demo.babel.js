@@ -27,8 +27,9 @@ const config = {
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'usage',
+                  useBuiltIns: 'entry',
                   debug: true,
+                  modules: 'umd',
                   corejs: 3
                 }
               ],
