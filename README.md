@@ -1,14 +1,13 @@
 # react-codemirror-runmode
 
-Syntax highlighter for React, using CodeMirror 6
+Syntax highlighter for React, using CodeMirror 6.
+It automatically loads [the language metadata](https://github.com/codemirror/language-data) and dynamically loads language parser modules based on the specified language.
 
 ## Installation
 
 ```sh
 npm install --save react-codemirror-runmode
 ```
-
-You'll also need to provide the CodeMirror language definitions you want to use. We don't bundle these in order to not bloat the component with unused definitions.
 
 ## Usage
 
