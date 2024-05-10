@@ -1,14 +1,11 @@
-react-codemirror-runmode
-========================
+# react-codemirror-runmode
 
-[![build status](https://secure.travis-ci.org/craftzdog/react-codemirror-runmode.svg)](http://travis-ci.org/craftzdog/react-codemirror-runmode)
-
-Syntax highlighter for React, utilizing CodeMirror's parser
+Syntax highlighter for React, using CodeMirror 6
 
 ## Installation
 
 ```sh
-npm install --save react-codemirror-runmode codemirror
+npm install --save react-codemirror-runmode
 ```
 
 You'll also need to provide the CodeMirror language definitions you want to use. We don't bundle these in order to not bloat the component with unused definitions.
@@ -16,45 +13,49 @@ You'll also need to provide the CodeMirror language definitions you want to use.
 ## Usage
 
 ```javascript
-import CodeMirror from 'codemirror'
-import 'codemirror/addon/runmode/runmode'
-import 'codemirror/mode/meta'
-import 'codemirror/mode/javascript/javascript'
-import Highlighter from 'react-codemirror-runmode'
+import { oneDarkHighlightStyle } from '@codemirror/theme-one-dark'
+import { Highlighter } from 'react-codemirror-runmode'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
-ReactDOM.render(
-  <Highlighter
-    codeMirror={CodeMirror}
-    theme='solarized'
-    value='/* Code to highlight */'
-    language='javascript'
-  />,
-  document.getElementById('root')
+const code = 'const x = 123'
+
+ReactDOM.createRoot(document.getElementById('app')!).render(
+  <Highlighter lang="js" highlightStyle={oneDarkHighlightStyle}>
+    {code}
+  </Highlighter>
 )
 ```
 
-## Styling
+## Theming
 
-Stylesheets are not automatically handled for you - but there is [a bunch of premade styles](https://codemirror.net/demo/theme.html) for CodeMirror which you can simply drop in and they'll "just work". You can either grab these from the source, of pull them in using a CSS loader - whatever works best for you. They're also available on [cdnjs](https://cdnjs.com/libraries/codemirror):
+You can apply custom themes using CodeMirror's theme system. This component uses [`HighlightStyle`](https://codemirror.net/docs/ref#language.HighlightStyle) objects to apply styles, which you can customize or replace.
 
-```html
-<link
-  rel="stylesheet"
-  href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/theme/solarized.min.css"
-/>
-```
+## Reference
 
-## Props
+### `Highlighter`
 
-| Name | Description |
-|------|-------------|
-| `className` | Class name for the outermost `pre` tag. Default: `''` |
-| `language` | Language to use for syntax highlighting this value. Must be registered prior to usage. |
-| `value` | The code snippet to syntax highlight |
-| `prefix` | Class name prefix for individual node. Default: `cm-` |
-| `inline` | Whether code should be displayed inline (no `<pre>` tag, sets `display: inline`) |
+Props:
+
+- `lang`: `string` - The name of the language
+- `highlightStyle`: [`HighlightStyle`](https://codemirror.net/docs/ref#language.HighlightStyle) - The highlight style
+- `children`: `string` - The code to highlight
+
+### `highlightCode<Output>(languageName, input, highlightStyle, callback): Promise<Output[]>`
+
+Parameters:
+
+- `languageName`: `string` - The name of the language
+- `input`: `string` - The code to highlight
+- `highlightStyle`: [`HighlightStyle`](https://codemirror.net/docs/ref#language.HighlightStyle) - The highlight style
+- `callback`: `(text: string, style: string | null, from: number, to: number) => Output)` - A callback function that converts the parsed tokens
+
+### `getCodeParser(languageName, defaultLanguage?): Promise<Parser | null>`
+
+Parameters:
+
+- `languageName: string` - The name of the language
+- `defaultLanguage?: Language` - A fallback language (Optional)
 
 ## License
 

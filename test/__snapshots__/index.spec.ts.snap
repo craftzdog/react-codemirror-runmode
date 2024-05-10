@@ -1,0 +1,48 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`highlightCode > highlights JavaScript code 1`] = `
+[
+  {
+    "from": 0,
+    "style": "ͼp",
+    "text": "const",
+    "to": 5,
+  },
+  {
+    "from": 5,
+    "style": null,
+    "text": " ",
+    "to": 6,
+  },
+  {
+    "from": 6,
+    "style": "ͼt",
+    "text": "x",
+    "to": 7,
+  },
+  {
+    "from": 7,
+    "style": null,
+    "text": " ",
+    "to": 8,
+  },
+  {
+    "from": 8,
+    "style": "ͼv",
+    "text": "=",
+    "to": 9,
+  },
+  {
+    "from": 9,
+    "style": null,
+    "text": " ",
+    "to": 10,
+  },
+  {
+    "from": 10,
+    "style": "ͼu",
+    "text": "123",
+    "to": 13,
+  },
+]
+`;

@@ -2,14 +2,21 @@
   "name": "react-codemirror-runmode",
   "version": "1.0.5",
   "description": "Syntax highlighting for react, utilizing CodeMirror's parser",
-  "main": "lib/index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
-    "build": "babel src -d lib",
-    "watch": "babel src --watch -d lib",
-    "watch:demo": "webpack --progress --watch --config webpack.config.demo.babel.js",
-    "lint": "eslint src --ext .js --ext .jsx",
-    "test": "mocha --require @babel/register --require test/setup.js",
-    "prepublishOnly": "npm run build && npm run lint && npm test"
+    "build": "tsc --project tsconfig.build.json",
+    "test": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepublishOnly": "npm-run-all lint format:check build && npm run test run"
   },
   "keywords": [
     "remark",
@@ -24,35 +31,30 @@
     "type": "git",
     "url": "https://github.com/craftzdog/react-codemirror-runmode.git"
   },
+  "dependencies": {
+    "@codemirror/language": "^6.10.1",
+    "@codemirror/language-data": "^6.5.1",
+    "@lezer/common": "^1.2.1",
+    "@lezer/highlight": "^1.2.0"
+  },
+  "peerDependencies": {
+    "react": ">= 18"
+  },
   "devDependencies": {
-    "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.10",
-    "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
-    "@babel/preset-env": "^7.13.10",
-    "@babel/preset-react": "^7.12.13",
-    "@babel/register": "^7.13.8",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.2.2",
-    "babel-plugin-add-module-exports": "^1.0.4",
-    "codemirror": "^5.60.0",
-    "core-js": "^3.9.1",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.6",
-    "eslint": "^7.22.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "jsdom": "^16.5.1",
-    "mocha": "^8.3.2",
-    "prettier": "^2.2.1",
-    "prop-types": "^15.7.2",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
-    "react-test-renderer": "^16.14.0",
-    "remark": "^13.0.0",
-    "remark-react": "^8.0.0",
-    "webpack": "^5.27.1",
-    "webpack-cli": "^4.5.0"
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@testing-library/react": "^15.0.7",
+    "@types/node": "^20.12.11",
+    "@types/react": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "jsdom": "^24.0.0",
+    "prettier": "^3.2.5",
+    "react": "^18.3.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vitest": "^1.6.0"
   }
 }
