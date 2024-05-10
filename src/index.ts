@@ -1,2 +1,2 @@
-export * from './highlight'
-export * from './react-highlighter'
+export * from './highlight.js'
+export * from './react-highlighter.js'
