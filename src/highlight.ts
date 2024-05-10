@@ -1,10 +1,6 @@
 import { Parser } from '@lezer/common'
-import {
-  HighlightStyle,
-  Language,
-  LanguageDescription
-} from '@codemirror/language'
-import { highlightTree } from '@lezer/highlight'
+import { Language, LanguageDescription } from '@codemirror/language'
+import { Highlighter, highlightTree } from '@lezer/highlight'
 import { languages } from '@codemirror/language-data'
 
 export async function getCodeParser(
@@ -28,7 +24,7 @@ export async function getCodeParser(
 export async function highlightCode<Output>(
   languageName: string,
   input: string,
-  highlightStyle: HighlightStyle,
+  highlighter: Highlighter,
   callback: (
     text: string,
     style: string | null,
@@ -41,7 +37,7 @@ export async function highlightCode<Output>(
     const tree = parser.parse(input)
     const output: Array<Output> = []
     let pos = 0
-    highlightTree(tree, highlightStyle, (from, to, classes) => {
+    highlightTree(tree, highlighter, (from, to, classes) => {
       if (from > pos)
         output.push(callback(input.slice(pos, from), null, pos, from))
       output.push(callback(input.slice(from, to), classes, from, to))

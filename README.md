@@ -20,7 +20,7 @@ import ReactDOM from 'react-dom/client'
 const code = 'const x = 123'
 
 ReactDOM.createRoot(document.getElementById('app')!).render(
-  <Highlighter lang="js" highlightStyle={oneDarkHighlightStyle}>
+  <Highlighter lang="js" theme={oneDarkHighlightStyle}>
     {code}
   </Highlighter>
 )
@@ -37,7 +37,7 @@ You can apply custom themes using CodeMirror's theme system. This component uses
 Props:
 
 - `lang`: `string` - The name of the language
-- `highlightStyle`: [`HighlightStyle`](https://codemirror.net/docs/ref#language.HighlightStyle) - The highlight style
+- `theme`: [`Highlighter`](https://lezer.codemirror.net/docs/ref/#highlight.Highlighter) - The highlight style
 - `children`: `string` - The code to highlight
 
 ### `highlightCode<Output>(languageName, input, highlightStyle, callback): Promise<Output[]>`
@@ -46,7 +46,7 @@ Parameters:
 
 - `languageName`: `string` - The name of the language
 - `input`: `string` - The code to highlight
-- `highlightStyle`: [`HighlightStyle`](https://codemirror.net/docs/ref#language.HighlightStyle) - The highlight style
+- `highlighter`: [`Highlighter`](https://lezer.codemirror.net/docs/ref/#highlight.Highlighter) - The highlight style
 - `callback`: `(text: string, style: string | null, from: number, to: number) => Output)` - A callback function that converts the parsed tokens
 
 ### `getCodeParser(languageName, defaultLanguage?): Promise<Parser | null>`

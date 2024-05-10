@@ -70,7 +70,7 @@ describe('React Highlighter', () => {
     const code = 'const x = 123'
     render(
       <code className="mde-preview">
-        <Highlighter lang="js" highlightStyle={oneDarkHighlightStyle}>
+        <Highlighter lang="js" theme={oneDarkHighlightStyle}>
           {code}
         </Highlighter>
       </code>

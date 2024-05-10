@@ -1,15 +1,15 @@
 import React, { memo, useEffect, useState } from 'react'
 import { highlightCode } from './highlight'
-import type { HighlightStyle } from '@codemirror/language'
+import type { Highlighter as LezerHighlighter } from '@lezer/highlight'
 
 export type HighlighterProps = {
   lang: string
   children: string
-  highlightStyle: HighlightStyle
+  theme: LezerHighlighter
 }
 
 export const Highlighter = memo<HighlighterProps>((props: HighlighterProps) => {
-  const { lang, children: code, highlightStyle } = props
+  const { lang, children: code, theme } = props
   const [highlightedCode, setHighlightedCode] = useState<
     React.ReactNode[] | null
   >(null)
@@ -18,7 +18,7 @@ export const Highlighter = memo<HighlighterProps>((props: HighlighterProps) => {
     highlightCode(
       lang,
       code,
-      highlightStyle,
+      theme,
       (text: string, style: string | null, from: number) => {
         return (
           <span key={from} className={style || ''}>
@@ -27,7 +27,7 @@ export const Highlighter = memo<HighlighterProps>((props: HighlighterProps) => {
         )
       }
     ).then(setHighlightedCode)
-  }, [lang, code, highlightStyle])
+  }, [lang, code, theme])
 
   return <>{highlightedCode || code}</>
 })
