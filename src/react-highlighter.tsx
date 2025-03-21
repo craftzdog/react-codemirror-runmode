@@ -31,3 +31,4 @@ export const Highlighter = memo<HighlighterProps>((props: HighlighterProps) => {
 
   return <>{highlightedCode || code}</>
 })
+Highlighter.displayName = 'Highlighter'
