@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react'
-import { highlightCode } from './highlight'
+import { highlightCode } from './highlight.js'
 import type { Highlighter as LezerHighlighter } from '@lezer/highlight'
 
 export type HighlighterProps = {
