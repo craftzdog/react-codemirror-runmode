@@ -39,14 +39,18 @@ Props:
 - `lang`: `string` - The name of the language
 - `theme`: [`Highlighter`](https://lezer.codemirror.net/docs/ref/#highlight.Highlighter) - The highlight style
 - `children`: `string` - The code to highlight
+- `fallbackLanguage`: `Language` - Optional fallback language to use if the specified language isn't found
+- `languages`: `LanguageDescription[]` - Optional custom list of language descriptions
 
-### `highlightCode<Output>(languageName, input, highlightStyle, callback): Promise<Output[]>`
+### `highlightCode<o>(languageName, input, highlightStyle, fallbackLanguage?, languages?, callback): Promise<Output[]>`
 
 Parameters:
 
 - `languageName`: `string` - The name of the language
 - `input`: `string` - The code to highlight
 - `highlighter`: [`Highlighter`](https://lezer.codemirror.net/docs/ref/#highlight.Highlighter) - The highlight style
+- `fallbackLanguage`: `Language` - Optional fallback language to use if the specified language isn't found
+- `languages`: `LanguageDescription[]` - Optional custom list of language descriptions
 - `callback`: `(text: string, style: string | null, from: number, to: number) => Output)` - A callback function that converts the parsed tokens
 
 ### `getCodeParser(languageName, defaultLanguage?): Promise<Parser | null>`

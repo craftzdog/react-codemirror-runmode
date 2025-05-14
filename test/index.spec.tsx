@@ -29,6 +29,8 @@ describe('highlightCode', () => {
       'js',
       'const x = 123',
       oneDarkHighlightStyle,
+      undefined,
+      undefined,
       (text, style, from, to) => ({ text, style, from, to })
     )
     expect(highlighted).toHaveLength(7)

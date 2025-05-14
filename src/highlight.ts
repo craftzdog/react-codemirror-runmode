@@ -1,13 +1,14 @@
 import { Parser } from '@lezer/common'
 import { Language, LanguageDescription } from '@codemirror/language'
 import { Highlighter, highlightTree } from '@lezer/highlight'
-import { languages } from '@codemirror/language-data'
+import { languages as builtinLanguages } from '@codemirror/language-data'
 
 export async function getCodeParser(
   languageName: string,
-  defaultLanguage?: Language
+  fallbackLanguage?: Language,
+  languages: LanguageDescription[] = builtinLanguages
 ): Promise<Parser | null> {
-  if (languageName && languages) {
+  if (languageName) {
     const found = LanguageDescription.matchLanguageName(
       languages,
       languageName,
@@ -18,13 +19,15 @@ export async function getCodeParser(
       return found.support ? found.support.language.parser : null
     } else if (found) return (found as any).parser
   }
-  return defaultLanguage ? defaultLanguage.parser : null
+  return fallbackLanguage ? fallbackLanguage.parser : null
 }
 
 export async function highlightCode<Output>(
   languageName: string,
   input: string,
   highlighter: Highlighter,
+  fallbackLanguage: Language | undefined,
+  languages: LanguageDescription[] | undefined,
   callback: (
     text: string,
     style: string | null,
@@ -32,7 +35,7 @@ export async function highlightCode<Output>(
     to: number
   ) => Output
 ): Promise<Output[]> {
-  const parser = await getCodeParser(languageName)
+  const parser = await getCodeParser(languageName, fallbackLanguage, languages)
   if (parser) {
     const tree = parser.parse(input)
     const output: Array<Output> = []
