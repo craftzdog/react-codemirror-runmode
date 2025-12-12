@@ -3,17 +3,18 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "lib": ["es2024", "dom"],
+    "lib": ["esnext", "dom"],
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "strict": true,
     "isolatedModules": true,
     "sourceMap": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "noImplicitAny": false,
     "outDir": "dist",
     "declaration": true,
-    "declarationDir": "dist"
+    "declarationDir": "dist",
+    "skipLibCheck": true
   }
 }
