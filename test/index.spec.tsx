@@ -67,6 +67,40 @@ describe('highlightCode', () => {
   })
 })
 
+describe('Highlight codeblocks', () => {
+  it('highlights codeblocks in markdown', async () => {
+    const mdCode = '```js\nconst x = 123\n```'
+    const highlighted = await highlightCode(
+      'markdown',
+      mdCode,
+      oneDarkHighlightStyle,
+      undefined,
+      undefined,
+      (text, style, from, to) => ({ text, style, from, to })
+    )
+    // Should have tokens for the markdown code block structure and the JS code inside
+    expect(highlighted.length).toBeGreaterThan(0)
+
+    // Find the code fence markers
+    const fenceStart = highlighted.find(t => t.text === '```')
+    expect(fenceStart).toBeDefined()
+
+    // Find the language info token
+    const langInfo = highlighted.find(t => t.text === 'js')
+    expect(langInfo).toBeDefined()
+
+    // Find the JS keyword 'const' inside the code block
+    const constToken = highlighted.find(t => t.text === 'const')
+    expect(constToken).toBeDefined()
+    expect(constToken?.style).not.toBeNull()
+
+    // Find the number '123'
+    const numberToken = highlighted.find(t => t.text === '123')
+    expect(numberToken).toBeDefined()
+    expect(numberToken?.style).not.toBeNull()
+  })
+})
+
 describe('React Highlighter', () => {
   it('renders highlighted code', async () => {
     const code = 'const x = 123'

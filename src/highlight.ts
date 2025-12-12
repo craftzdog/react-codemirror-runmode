@@ -2,13 +2,19 @@ import { Parser } from '@lezer/common'
 import { Language, LanguageDescription } from '@codemirror/language'
 import { Highlighter, highlightTree } from '@lezer/highlight'
 import { languages as builtinLanguages } from '@codemirror/language-data'
+import { markdown } from '@codemirror/lang-markdown'
 
 export async function getCodeParser(
   languageName: string,
   fallbackLanguage?: Language,
   languages: LanguageDescription[] = builtinLanguages
 ): Promise<Parser | null> {
-  if (languageName) {
+  if (languageName === 'markdown' || languageName === 'md') {
+    const mdSupport = markdown({
+      codeLanguages: builtinLanguages
+    })
+    return mdSupport.language.parser
+  } else {
     const found = LanguageDescription.matchLanguageName(
       languages,
       languageName,
