@@ -10,15 +10,15 @@ const sleep = (msec: number) =>
 
 describe('getCodeParser', () => {
   it('loads a JavaScript parser', async () => {
-    const parser = await getCodeParser('js')
+    const parser = await getCodeParser('', 'js')
     expect(parser).toBeInstanceOf(Parser)
   })
   it('loads a Python parser', async () => {
-    const parser = await getCodeParser('python')
+    const parser = await getCodeParser('', 'python')
     expect(parser).toBeInstanceOf(Parser)
   })
   it('returns null for non-existing languages', async () => {
-    const parser = await getCodeParser('foobar123')
+    const parser = await getCodeParser('', 'foobar123')
     expect(parser).toBeNull()
   })
 })
@@ -93,6 +93,38 @@ describe('Highlight codeblocks', () => {
     const constToken = highlighted.find(t => t.text === 'const')
     expect(constToken).toBeDefined()
     expect(constToken?.style).not.toBeNull()
+
+    // Find the number '123'
+    const numberToken = highlighted.find(t => t.text === '123')
+    expect(numberToken).toBeDefined()
+    expect(numberToken?.style).not.toBeNull()
+  })
+
+  it('highlights typescript codeblocks in markdown', async () => {
+    const mdCode = '```typescript\nconst x: number = 123\n```'
+    const highlighted = await highlightCode(
+      'markdown',
+      mdCode,
+      oneDarkHighlightStyle,
+      undefined,
+      undefined,
+      (text, style, from, to) => ({ text, style, from, to })
+    )
+    expect(highlighted.length).toBeGreaterThan(0)
+
+    // Find the language info token
+    const langInfo = highlighted.find(t => t.text === 'typescript')
+    expect(langInfo).toBeDefined()
+
+    // Find the TS keyword 'const'
+    const constToken = highlighted.find(t => t.text === 'const')
+    expect(constToken).toBeDefined()
+    expect(constToken?.style).not.toBeNull()
+
+    // Find the type annotation 'number'
+    const typeToken = highlighted.find(t => t.text === 'number')
+    expect(typeToken).toBeDefined()
+    expect(typeToken?.style).not.toBeNull()
 
     // Find the number '123'
     const numberToken = highlighted.find(t => t.text === '123')

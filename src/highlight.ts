@@ -4,16 +4,68 @@ import { Highlighter, highlightTree } from '@lezer/highlight'
 import { languages as builtinLanguages } from '@codemirror/language-data'
 import { markdown } from '@codemirror/lang-markdown'
 
+/**
+ * Extract language names from code blocks in markdown text
+ */
+function extractCodeBlockLanguages(text: string): string[] {
+  const codeBlockRegex = /```(\w+)/g
+  const languages: string[] = []
+  let match
+  while ((match = codeBlockRegex.exec(text)) !== null) {
+    languages.push(match[1])
+  }
+  return languages
+}
+
+/**
+ * Pre-load parsers for a list of language names
+ */
+async function preloadLanguageParsers(
+  languageNames: string[],
+  languages: LanguageDescription[]
+): Promise<LanguageDescription[]> {
+  return (
+    await Promise.all(
+      languageNames.map(async langName => {
+        const found = LanguageDescription.matchLanguageName(
+          languages,
+          langName,
+          true
+        )
+        if (found instanceof LanguageDescription) {
+          if (!found.support) await found.load()
+          if (found.support) {
+            return found
+          }
+        }
+      })
+    )
+  ).filter((desc): desc is LanguageDescription => !!desc)
+}
+
+export async function getMarkdownParser(
+  input: string,
+  languages: LanguageDescription[] = builtinLanguages
+): Promise<Parser> {
+  const codeBlockLanguages = extractCodeBlockLanguages(input)
+  const preloadedLanguages = await preloadLanguageParsers(
+    codeBlockLanguages || [],
+    languages
+  )
+  const langSupport = markdown({
+    codeLanguages: preloadedLanguages
+  })
+  return langSupport.language.parser
+}
+
 export async function getCodeParser(
+  input: string,
   languageName: string,
   fallbackLanguage?: Language,
   languages: LanguageDescription[] = builtinLanguages
 ): Promise<Parser | null> {
   if (languageName === 'markdown' || languageName === 'md') {
-    const mdSupport = markdown({
-      codeLanguages: builtinLanguages
-    })
-    return mdSupport.language.parser
+    return await getMarkdownParser(input, languages)
   } else {
     const found = LanguageDescription.matchLanguageName(
       languages,
@@ -41,7 +93,12 @@ export async function highlightCode<Output>(
     to: number
   ) => Output
 ): Promise<Output[]> {
-  const parser = await getCodeParser(languageName, fallbackLanguage, languages)
+  const parser = await getCodeParser(
+    input,
+    languageName,
+    fallbackLanguage,
+    languages
+  )
   if (parser) {
     const tree = parser.parse(input)
     const output: Array<Output> = []
