@@ -1,6 +1,6 @@
 {
   "name": "react-codemirror-runmode",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Syntax highlighting for react, utilizing CodeMirror's parser",
   "type": "module",
   "main": "dist/index.js",
