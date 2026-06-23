@@ -1,12 +1,14 @@
+import { markdownLanguage } from '@codemirror/lang-markdown'
+import { oneDarkHighlightStyle } from '@codemirror/theme-one-dark'
+import { Parser } from '@lezer/common'
+import { tagHighlighter, tags } from '@lezer/highlight'
+import { render, screen } from '@testing-library/react'
 // @vitest-environment jsdom
 import { describe, expect, it } from 'vitest'
-import { Parser } from '@lezer/common'
-import { oneDarkHighlightStyle } from '@codemirror/theme-one-dark'
-import { getCodeParser, highlightCode, Highlighter } from '../src'
-import { render, screen } from '@testing-library/react'
 
-const sleep = (msec: number) =>
-  new Promise(resolve => setTimeout(resolve, msec))
+import { getCodeParser, highlightCode, Highlighter } from '../src'
+
+const sleep = (msec: number) => new Promise(resolve => setTimeout(resolve, msec))
 
 describe('getCodeParser', () => {
   it('loads a JavaScript parser', async () => {
@@ -130,6 +132,58 @@ describe('Highlight codeblocks', () => {
     const numberToken = highlighted.find(t => t.text === '123')
     expect(numberToken).toBeDefined()
     expect(numberToken?.style).not.toBeNull()
+  })
+})
+
+describe('markdownConfig (GFM)', () => {
+  const strikeHighlighter = tagHighlighter([{ tag: tags.strikethrough, class: 'strike' }])
+
+  it('does not tokenize GFM strikethrough with the default CommonMark base', async () => {
+    const highlighted = await highlightCode(
+      'markdown',
+      '~~gone~~',
+      strikeHighlighter,
+      undefined,
+      undefined,
+      (text, style) => ({ text, style })
+    )
+    expect(highlighted.some(t => t.style === 'strike')).toBe(false)
+  })
+
+  it('tokenizes GFM strikethrough when base is markdownLanguage', async () => {
+    const highlighted = await highlightCode(
+      'markdown',
+      '~~gone~~',
+      strikeHighlighter,
+      undefined,
+      undefined,
+      (text, style) => ({ text, style }),
+      { base: markdownLanguage }
+    )
+    const struck = highlighted.find(t => t.style === 'strike')
+    expect(struck).toBeDefined()
+    expect(struck?.text).toContain('gone')
+  })
+})
+
+describe('multiple highlighters', () => {
+  const highlighterA = tagHighlighter([{ tag: tags.strikethrough, class: 'a-strike' }])
+  const highlighterB = tagHighlighter([{ tag: tags.strikethrough, class: 'b-strike' }])
+
+  it('merges classes emitted by an array of highlighters', async () => {
+    const highlighted = await highlightCode(
+      'markdown',
+      '~~gone~~',
+      [highlighterA, highlighterB],
+      undefined,
+      undefined,
+      (text, style) => ({ text, style }),
+      { base: markdownLanguage }
+    )
+    const struck = highlighted.find(t => t.style?.includes('a-strike'))
+    expect(struck).toBeDefined()
+    expect(struck?.style).toContain('a-strike')
+    expect(struck?.style).toContain('b-strike')
   })
 })
 
