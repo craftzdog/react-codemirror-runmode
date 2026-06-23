@@ -2,6 +2,18 @@
   "name": "react-codemirror-runmode",
   "version": "2.2.1",
   "description": "Syntax highlighting for react, utilizing CodeMirror's parser",
+  "keywords": [
+    "codemirror",
+    "highlight",
+    "react",
+    "syntax"
+  ],
+  "license": "MIT",
+  "author": "Takuya Matsuyama <hi@craftz.dog>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/craftzdog/react-codemirror-runmode.git"
+  },
   "type": "module",
   "main": "dist/index.js",
   "exports": {
@@ -13,50 +25,36 @@
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
     "test": "vitest",
-    "lint": "eslint .",
+    "lint": "oxlint",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "prepublishOnly": "npm-run-all lint format:check build && npm run test run"
   },
-  "keywords": [
-    "react",
-    "codemirror",
-    "syntax",
-    "highlight"
-  ],
-  "author": "Takuya Matsuyama <hi@craftz.dog>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/craftzdog/react-codemirror-runmode.git"
-  },
   "dependencies": {
-    "@codemirror/language": "^6.11.3",
+    "@codemirror/lang-markdown": "^6.5.0",
+    "@codemirror/language": "^6.12.3",
     "@codemirror/language-data": "^6.5.2",
-    "@lezer/common": "^1.4.0",
+    "@lezer/common": "^1.5.2",
     "@lezer/highlight": "^1.2.3"
-  },
-  "peerDependencies": {
-    "react": ">= 18"
   },
   "devDependencies": {
     "@codemirror/theme-one-dark": "^6.1.3",
-    "@testing-library/react": "^16.3.0",
-    "@types/node": "^25.0.1",
-    "@types/react": "^19.2.7",
-    "@vitejs/plugin-react": "^5.1.2",
-    "eslint": "^9.39.1",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "jsdom": "^27.3.0",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^26.0.0",
+    "@types/react": "^19.2.17",
+    "@vitejs/plugin-react": "^6.0.2",
+    "jsdom": "^29.1.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^3.7.4",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.49.0",
-    "vite": "^7.2.7",
-    "vitest": "^4.0.15"
+    "oxfmt": "0.56.0",
+    "oxlint": "1.71.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.9"
+  },
+  "peerDependencies": {
+    "react": ">= 18"
   }
 }
