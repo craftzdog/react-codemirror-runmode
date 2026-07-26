@@ -203,4 +203,26 @@ describe('React Highlighter', () => {
     expect(element).toHaveProperty('className', 'ͼp')
     expect(screen.getByText('123')).toHaveProperty('className', 'ͼu')
   })
+
+  it('swaps in a freshly created wrapper once highlighting resolves', async () => {
+    const { container } = render(
+      <code>
+        <Highlighter lang="js" theme={oneDarkHighlightStyle}>
+          {'const x = 123'}
+        </Highlighter>
+      </code>
+    )
+    const pendingWrapper = container.querySelector('code > span')
+    expect(pendingWrapper).not.toBeNull()
+
+    await sleep(100)
+
+    // Reusing the pending element would make React insert every highlighted span
+    // into the already-attached DOM one at a time, which is ~25x slower on large
+    // input. The wrapper must be a genuinely new element.
+    const resolvedWrapper = container.querySelector('code > span')
+    expect(resolvedWrapper).not.toBe(pendingWrapper)
+    expect(resolvedWrapper?.getAttribute('style')).toContain('display: contents')
+    expect(container.textContent).toBe('const x = 123')
+  })
 })

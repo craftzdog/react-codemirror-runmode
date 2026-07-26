@@ -24,7 +24,8 @@
   },
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "test": "vitest",
+    "test": "vitest --run",
+    "bench": "vitest bench --run",
     "lint": "oxlint",
     "typecheck": "tsc --noEmit",
     "format": "oxfmt",

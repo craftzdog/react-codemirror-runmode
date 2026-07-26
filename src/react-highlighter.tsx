@@ -24,6 +24,8 @@ export type HighlighterProps = {
   markdownConfig?: MarkdownConfig
 }
 
+const WRAPPER_STYLE = { display: 'contents' } as const
+
 export const Highlighter = memo<HighlighterProps>((props: HighlighterProps) => {
   const { lang, children: code, theme, fallbackLanguage, languages, markdownConfig } = props
   const [highlightedCode, setHighlightedCode] = useState<React.ReactNode[] | null>(null)
@@ -46,6 +48,14 @@ export const Highlighter = memo<HighlighterProps>((props: HighlighterProps) => {
     ).then(setHighlightedCode)
   }, [lang, code, theme, markdownConfig])
 
-  return <>{highlightedCode || code}</>
+  return highlightedCode ? (
+    <span key="highlighted" style={WRAPPER_STYLE}>
+      {highlightedCode}
+    </span>
+  ) : (
+    <span key="pending" style={WRAPPER_STYLE}>
+      {code}
+    </span>
+  )
 })
 Highlighter.displayName = 'Highlighter'
