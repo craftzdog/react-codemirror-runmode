@@ -83,9 +83,7 @@ import { markdownLanguage } from '@codemirror/lang-markdown'
   theme={[tokenHighlighter, mdTokenHighlighter]}
   markdownConfig={{
     base: markdownLanguage,
-    extensions: [
-      /* your @lezer/markdown extensions */
-    ]
+    extensions: [/* your @lezer/markdown extensions */]
   }}
 >
   {markdownSource}
